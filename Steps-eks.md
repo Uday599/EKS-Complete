@@ -172,3 +172,29 @@ subjects:
 ### Generate token using service account in the namespace
 
 [Create Token](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#:~:text=To%20create%20a%20non%2Dexpiring,with%20that%20generated%20token%20data.)
+
+```yaml
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecretname
+  namespace: webapps
+  annotations:
+    kubernetes.io/service-account.name: jenkins
+type: kubernetes.io/service-account-token
+
+```
+
+Describe above secret to get a token
+
+```sh
+kubectl desctibe secret mysecretname -n webapps
+```
+
+Copy the token and create secret text credential in Jenkins and provide this.
+
+```
+withkubeConfig(caCertificate:"",clusterName:"",contextName:""..............)
+
+```
